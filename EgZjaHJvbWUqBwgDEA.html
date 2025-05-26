@@ -209,6 +209,20 @@
         color: #f9c46b;
       }
     }
+
+    #heart-explosion-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      /* clips hearts going outside */
+      pointer-events: none;
+      /* lets clicks go through */
+      z-index: 9999;
+      /* on top of everything */
+    }
   </style>
 </head>
 
@@ -217,7 +231,7 @@
     I LOVE YOU CHAKKUOOOOOO!!!
   </div>
   <audio id="bg-music" src="bg.mp3" loop></audio>
-
+  <div id="heart-explosion-container"></div>
   <div id="floating-icons-container"></div>
   <button id="logout-btn">Logout</button>
   <div id="love-timer">
@@ -324,6 +338,8 @@
       container.appendChild(div);
     }
 
+    const heartContainer = document.getElementById('heart-explosion-container');
+
     document.addEventListener('click', (e) => {
       for (let i = 0; i < 10; i++) {
         const heart = document.createElement('div');
@@ -331,7 +347,6 @@
         heart.style.left = e.clientX + 'px';
         heart.style.top = e.clientY + 'px';
 
-        // Random explosion direction
         const angle = Math.random() * 2 * Math.PI;
         const radius = 60 + Math.random() * 40;
         const x = Math.cos(angle) * radius + 'px';
@@ -340,10 +355,11 @@
         heart.style.setProperty('--x', x);
         heart.style.setProperty('--y', y);
 
-        document.body.appendChild(heart);
+        heartContainer.appendChild(heart);
         setTimeout(() => heart.remove(), 1000);
       }
     });
+
 
     function playMusic() {
       const music = document.getElementById('bg-music');

@@ -47,6 +47,7 @@
 
 
     @media (max-width: 600px) {
+
       .message {
         font-size: 10vw;
         padding: 3rem;
@@ -97,6 +98,29 @@
       z-index: 5;
     }
 
+    #logout-btn {
+      position: fixed;
+      bottom: 70px;
+      /* above the timer which is at 20px */
+      left: 20px;
+      padding: 8px 16px;
+      background: transparent;
+      border: 2px solid #D16F6F;
+      color: #D16F6F;
+      font-weight: bold;
+      font-size: 1em;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      z-index: 999;
+      backdrop-filter: blur(3px);
+      user-select: none;
+    }
+
+    #logout-btn:hover {
+      background-color: #D16F6F;
+      color: white;
+    }
 
 
     .explosion-heart {
@@ -195,6 +219,7 @@
   <audio id="bg-music" src="bg.mp3" loop></audio>
 
   <div id="floating-icons-container"></div>
+  <button id="logout-btn">Logout</button>
   <div id="love-timer">
     🍔 Together for: <span id="timer-count"></span>
   </div>
@@ -422,6 +447,13 @@
       container.appendChild(word);
     }
 
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      localStorage.removeItem('accessGranted');
+      // Redirect to login or homepage (adjust as needed)
+      window.location.href = 'index.html';
+    });
+
   </script>
 </body>
+
 </html>

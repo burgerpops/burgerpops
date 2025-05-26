@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Itim&display=swap');
+
+    * {
+      font-family: "Itim", cursive;
+      font-weight: 500;
+    }
+
+    body {
+      display: flex;
+      height: 100vh;
+      align-items: center;
+      justify-content: center;
+      background: #F9E6E6;
+      /* soft blush */
+      color: #5C2C2C;
+      /* deep burgundy */
+      margin: 0;
+      overflow: hidden;
+      /* hide scrollbars caused by floating icons */
+      position: relative;
+    }
+
+    .login-box {
+      background: #FFEFEF;
+      /* creamy peach */
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(193, 114, 114, 0.3);
+      width: 300px;
+      text-align: center;
+      border: 1px solid #D16F6F;
+      /* warm rose border */
+      z-index: 10;
+      position: relative;
+    }
+
+    input {
+      padding: 0.5rem;
+      margin-top: 1rem;
+      width: 100%;
+      border: 1px solid #D16F6F;
+      border-radius: 6px;
+      font-size: 1rem;
+      color: #5C2C2C;
+      background: #FFF0F0;
+    }
+
+    input::placeholder {
+      color: #B07A7A;
+    }
+
+    button {
+      margin-top: 1rem;
+      padding: 0.5rem;
+      width: 100%;
+      background: #D16F6F;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1rem;
+      box-shadow: 0 4px 10px rgba(209, 111, 111, 0.6);
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background: #B55454;
+    }
+
+    .error {
+      color: #A42B2B;
+      margin-top: 1rem;
+      display: none;
+    }
+
+    /* Floating icon container */
+    .floating-icon {
+      position: fixed;
+      width: 40px;
+      height: 40px;
+      opacity: 0.7;
+      bottom: -50px;
+      animation-name: floatUp;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      animation-fill-mode: forwards;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    @keyframes loginSuccess {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+
+      100% {
+        transform: scale(1.2);
+        opacity: 0;
+      }
+    }
+
+    .login-box.success {
+      animation: loginSuccess 0.6s forwards;
+    }
+
+
+    @keyframes shake {
+      0% {
+        transform: translateX(0);
+      }
+
+      20% {
+        transform: translateX(-5px);
+      }
+
+      40% {
+        transform: translateX(5px);
+      }
+
+      60% {
+        transform: translateX(-5px);
+      }
+
+      80% {
+        transform: translateX(5px);
+      }
+
+      100% {
+        transform: translateX(0);
+      }
+    }
+
+    .shake {
+      animation: shake 0.5s;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 0.7;
+      }
+
+      100% {
+        transform: translateY(-110vh) scale(1.5);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="login-box">
+    <h2>Enter Secret Word</h2>
+    <input type="password" id="secretInput" placeholder="Secret Word" />
+    <button onclick="checkSecret()">Login</button>
+    <div class="error" id="errorMessage">Incorrect secret word.</div>
+  </div>
+
+  <!-- Floating SVG icons -->
+  <div id="floating-icons-container"></div>
+
+  <script>
+    async function sha256(input) {
+      const encoder = new TextEncoder();
+      const data = encoder.encode(input.trim());
+      const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+      return hashHex;
+    }
+
+    async function checkSecret() {
+      const input = document.getElementById("secretInput").value;
+      const hash = await sha256(input);
+      const expected = "3c3ee49961a0fdb9ee1d8dc8d07c8f4991d1f141e392845fe72637db99c5ed2d"; // orangesinlove
+      const box = document.querySelector(".login-box");
+
+      if (hash === expected) {
+        localStorage.setItem("accessGranted", "true");
+        box.classList.add("success");
+        setTimeout(() => {
+          window.location.href = "EgZjaHJvbWUqBwgDEA.html";
+        }, 600); // match the animation duration
+      } else {
+        document.getElementById("errorMessage").style.display = "block";
+        box.classList.add("shake");
+        setTimeout(() => box.classList.remove("shake"), 500);
+      }
+    }
+
+
+    // SVG icons as strings
+    const icons = {
+      heart: `<svg viewBox="0 0 24 24" fill="#D16F6F" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 
+          4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 
+          16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 
+          11.54L12 21.35z"/>
+      </svg>`,
+
+      orange: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" width="40" height="40" aria-label="Orange slice" role="img">
+  <!-- Orange circle base -->
+  <circle cx="32" cy="32" r="30" fill="#FFA500" stroke="#FF8C00" stroke-width="3"/>
+  
+  <!-- Segment lines -->
+  <g stroke="#FFB733" stroke-width="2">
+    <line x1="32" y1="2" x2="32" y2="62"/>
+    <line x1="12" y1="10" x2="52" y2="54"/>
+    <line x1="12" y1="54" x2="52" y2="10"/>
+    <line x1="4" y1="32" x2="60" y2="32"/>
+  </g>
+  
+  <!-- Inner highlights -->
+  <circle cx="32" cy="32" r="22" fill="url(#orangeGradient)" />
+  
+  <defs>
+    <radialGradient id="orangeGradient" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#FFF3E0" stop-opacity="0.6" />
+      <stop offset="100%" stop-color="#FFA500" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+</svg>
+`,
+
+
+
+      lollipop: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" width="40" height="40" aria-label="Lollipop" role="img">
+  <!-- Stick -->
+  <rect x="30" y="28" width="4" height="26" rx="2" fill="#AD1457" />
+  <rect x="31.5" y="28" width="1" height="26" rx="1" fill="#7B0F39" />
+  
+  <!-- Candy circle -->
+  <circle cx="32" cy="20" r="14" fill="#F48FB1" stroke="#AD1457" stroke-width="3"/>
+  
+  <!-- Swirl pattern -->
+  <path d="
+    M 32 6
+    A 14 14 0 1 1 31.9 34
+    M 32 10
+    A 10 10 0 1 0 31.9 30
+    M 32 14
+    A 6 6 0 1 1 31.9 26
+  " stroke="#E91E63" stroke-width="2" fill="none" />
+</svg>
+`
+    };
+
+    // Generate floating icons on screen
+    const container = document.getElementById("floating-icons-container");
+    const totalIcons = 20; // how many floating icons
+
+    function randomRange(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
+    for (let i = 0; i < totalIcons; i++) {
+      const iconTypes = Object.keys(icons);
+      const iconType = iconTypes[Math.floor(Math.random() * iconTypes.length)];
+      const div = document.createElement("div");
+      div.className = "floating-icon";
+      div.style.left = `${randomRange(0, 95)}vw`;
+      div.style.animationDuration = `${randomRange(10, 20)}s`;
+      div.style.animationDelay = `${randomRange(0, 20)}s`;
+      div.innerHTML = icons[iconType];
+      container.appendChild(div);
+    }
+  </script>
+</body>
+
+</html>

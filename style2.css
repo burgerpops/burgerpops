@@ -1,0 +1,349 @@
+@import url('https://fonts.googleapis.com/css2?family=Itim&display=swap');
+
+* {
+    font-family: "Itim", cursive;
+}
+
+html,
+body {
+    overflow: hidden;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background: #F9E6E6;
+    color: #5C2C2C;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+}
+
+.message {
+    user-select: none;
+    font-size: 8vw;
+    font-weight: bold;
+    padding: 1.5rem;
+    background: #FFEFEF;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(193, 114, 114, 0.3);
+    max-width: 80vw;
+    /* prevent overflow */
+    word-wrap: break-word;
+    /* wrap long words */
+    z-index: 20;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 1.2s ease-out forwards;
+    opacity: 0;
+    /* Start invisible */
+}
+
+
+@media (max-width: 600px) {
+
+    .message {
+        font-size: 10vw;
+        padding: 3rem;
+        border-radius: 10px;
+        max-width: 60vw;
+    }
+
+    #love-timer {
+        font-size: 0.9em;
+        padding: 8px 12px;
+    }
+
+    .floating-icon {
+        width: 30px;
+        height: 30px;
+    }
+}
+
+.floating-icon {
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    opacity: 0.7;
+    bottom: -50px;
+    animation-name: floatUp;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-fill-mode: forwards;
+    user-select: none;
+    pointer-events: none;
+}
+
+.floating-word {
+    position: fixed;
+    bottom: -40px;
+    /* start from below screen */
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #D16F6F;
+    opacity: 0.6;
+    animation-name: floatWord;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-fill-mode: forwards;
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
+    z-index: 5;
+}
+
+#logout-btn {
+    position: fixed;
+    bottom: 70px;
+    /* above the timer which is at 20px */
+    left: 20px;
+    padding: 8px 16px;
+    background: transparent;
+    border: 2px solid #D16F6F;
+    color: #D16F6F;
+    font-weight: bold;
+    font-size: 1em;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    z-index: 999;
+    backdrop-filter: blur(3px);
+    user-select: none;
+}
+
+#logout-btn:hover {
+    background-color: #D16F6F;
+    color: white;
+}
+
+
+.explosion-heart {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: red;
+    transform: rotate(45deg);
+    opacity: 1;
+    animation: explode 1s ease-out forwards;
+}
+
+.explosion-heart::before,
+.explosion-heart::after {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: red;
+    border-radius: 50%;
+}
+
+.explosion-heart::before {
+    top: -5px;
+    left: 0;
+}
+
+.explosion-heart::after {
+    top: 0;
+    left: -5px;
+}
+
+#love-timer {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(255, 0, 43, 0.544);
+    /* Soft pink glassy effect */
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 20px;
+    font-size: 1em;
+    z-index: 999;
+    backdrop-filter: blur(3px);
+    border: 1px solid #fff3;
+    font-weight: bold;
+    pointer-events: none;
+    /* allows clicks to pass through */
+}
+
+#music-toggle-btn {
+    position: fixed;
+    bottom: 120px;
+    /* above logout button */
+    left: 20px;
+    padding: 8px 16px;
+    background: transparent;
+    border: 2px solid #D16F6F;
+    color: #D16F6F;
+    font-weight: bold;
+    font-size: 1em;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    z-index: 999;
+    backdrop-filter: blur(3px);
+    user-select: none;
+}
+
+#music-toggle-btn:hover {
+    background-color: #D16F6F;
+    color: white;
+}
+
+
+
+@keyframes explode {
+    to {
+        transform: translate(var(--x), var(--y)) scale(2) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 0.9;
+    }
+
+    100% {
+        transform: translateY(-110vh) scale(1.5);
+        opacity: 0.3;
+    }
+}
+
+@keyframes floatWord {
+    0% {
+        transform: translateY(0);
+        opacity: 0.9;
+        color: #D16F6F;
+    }
+
+    50% {
+        color: #ff66a3;
+    }
+
+    100% {
+        transform: translateY(-110vh);
+        opacity: 0.3;
+        color: #f9c46b;
+    }
+}
+
+#heart-explosion-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    /* clips hearts going outside */
+    pointer-events: none;
+    /* lets clicks go through */
+    z-index: 9999;
+    /* on top of everything */
+}
+
+@keyframes floatFrame {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(-3deg);
+    }
+
+    50% {
+        transform: translateY(-5px) rotate(-3deg);
+    }
+}
+
+#press-hold-heart {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    font-size: 2.5rem;
+    cursor: pointer;
+    user-select: none;
+    z-index: 999;
+    transition: transform 0.3s ease;
+}
+
+#press-hold-heart:active {
+    transform: scale(1.1);
+}
+
+.heart-rain {
+    position: fixed;
+    top: -40px;
+    font-size: 1.8rem;
+    animation: fall 3s linear forwards;
+    pointer-events: none;
+    user-select: none;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(110vh);
+        opacity: 0;
+    }
+}
+
+@media (max-width: 370px) {
+    #press-hold-heart {
+        position: fixed;
+        bottom: 80px;
+        right: 20px;
+        font-size: 2.5rem;
+        cursor: pointer;
+        user-select: none;
+        z-index: 999;
+        transition: transform 0.3s ease;
+    }
+}
+#guestbook-btn {
+    position: fixed;
+    bottom: 170px; /* stacked above music and logout buttons */
+    left: 20px;
+    padding: 8px 16px;
+    background: transparent;
+    border: 2px solid #D16F6F;
+    color: #D16F6F;
+    font-weight: bold;
+    font-size: 1em;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    z-index: 999;
+    backdrop-filter: blur(3px);
+    user-select: none;
+}
+
+#guestbook-btn:hover {
+    background-color: #D16F6F;
+    color: white;
+}
+
+#music-toggle-btn {
+    bottom: 170px;
+}
+
+#guestbook-btn {
+    bottom: 120px;
+}
+
+#logout-btn {
+    bottom: 70px;
+}

@@ -4,7 +4,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Love Message</title>
+  <title>To You!</title>
+  <link rel="preload" as="audio" href="bg.mp3" type="audio/mpeg">
   <link rel="stylesheet" href="style2.css">
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
@@ -15,12 +16,12 @@
   <div class="message fade-in">
     I LOVE YOU CHAKKUOOOOOO!!!
   </div>
-  <audio id="bg-music" src="bg.mp3" loop></audio>
+  <audio id="bg-music" src="bg.mp3" loop preload="auto"></audio>
   <div id="heart-explosion-container"></div>
   <div id="floating-icons-container"></div>
-  <button id="music-toggle-btn" class="fade-in">🔊</button>
-  <button id="guestbook-btn" class="fade-in">Notes</button>
-  <button id="logout-btn" class="fade-in">Logout</button>
+  <button id="music-toggle-btn" class="fade-in" style="display: none;">🔇 Mute</button>
+  <button id="guestbook-btn" class="fade-in">📒 Notes</button>
+  <button id="logout-btn" class="fade-in">⏻ Logout</button>
 
   <div id="love-timer" class="fade-in">
     🍔 Together for: <span id="timer-count"></span>

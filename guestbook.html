@@ -306,7 +306,8 @@
         messagesList.innerHTML = "";
         messagesList.scrollTo({ top: 0, behavior: "smooth" });
         snapshot.forEach((doc) => {
-          addMessageToList(doc.data().text);
+          const data = doc.data();
+          addMessageToList(data.text, data.timestamp);
         });
       });
 

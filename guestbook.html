@@ -4,6 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Notes 💌</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Itim&display=swap");
 
@@ -148,6 +152,37 @@
 
   <body>
     <h1>Notes...</h1>
+    <div
+      class="modal fade"
+      id="nicknameModal"
+      tabindex="-1"
+      aria-labelledby="nicknameModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-light-pink">
+          <div class="modal-header">
+            <h5 class="modal-title" id="nicknameModalLabel">
+              Your Nickname 💌
+            </h5>
+          </div>
+          <div class="modal-body">
+            <input
+              type="text"
+              class="form-control"
+              id="nicknameInput"
+              placeholder="Enter your cute name"
+            />
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="saveNicknameBtn" class="btn btn-danger">
+              Save
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div id="floating-icons-container"></div>
 
     <form id="note-form">
@@ -256,6 +291,23 @@
         orderBy,
         onSnapshot,
       } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+      let nickname = localStorage.getItem("nickname");
+
+      if (!nickname) {
+        const modal = new bootstrap.Modal(
+          document.getElementById("nicknameModal")
+        );
+        modal.show();
+
+        document
+          .getElementById("saveNicknameBtn")
+          .addEventListener("click", () => {
+            const input = document.getElementById("nicknameInput").value.trim();
+            nickname = input || "Anonymous";
+            localStorage.setItem("nickname", nickname);
+            modal.hide();
+          });
+      }
 
       // Your Firebase config
       const firebaseConfig = {
@@ -277,7 +329,7 @@
       const messagesList = document.getElementById("messages-list");
 
       // Function to display messages
-      function addMessageToList(text, timestamp) {
+      function addMessageToList(text, timestamp, nickname = "Anonymous") {
         const card = document.createElement("div");
         card.className = "message-card";
 
@@ -291,9 +343,9 @@
           : "Sending...";
 
         card.innerHTML = `
-        <p>${text}</p>
-        <small style="color:#888; display:block; margin-top:6px;">${date}</small>
-    `;
+                    <p><strong>${nickname}:</strong> ${text}</p>
+                    <small style="color:#888; display:block; margin-top:6px;">${date}</small>
+                `;
         messagesList.appendChild(card);
       }
 
@@ -307,7 +359,7 @@
         messagesList.scrollTo({ top: 0, behavior: "smooth" });
         snapshot.forEach((doc) => {
           const data = doc.data();
-          addMessageToList(data.text, data.timestamp);
+          addMessageToList(data.text, data.timestamp, data.nickname);
         });
       });
 
@@ -320,6 +372,7 @@
         try {
           await addDoc(collection(db, "loveNotes"), {
             text: message,
+            nickname,
             timestamp: serverTimestamp(),
           });
           messageInput.value = "";
@@ -345,5 +398,7 @@
         }
       });
     </script>
+    <!-- Bootstrap JS Bundle (includes Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>

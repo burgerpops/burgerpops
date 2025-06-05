@@ -389,11 +389,27 @@
               minute: "2-digit",
             })
           : "Sending...";
-
-        card.innerHTML = `
+        
+          if (text === "audioMessage") {
+          card.innerHTML = `
+            <p><strong>${nickname}:</strong></p>
+            <div class="audio-player">
+              <button class="play-pause">
+                <i class="fas fa-play"></i>
+              </button>
+              <audio src="audio.mp3"></audio>
+            </div>
+            <small style="color:#888; display:block; margin-top:6px;">${date}</small>
+          `;
+        } else {
+          card.innerHTML = `
                     <p><strong>${nickname}:</strong> ${text}</p>
                     <small style="color:#888; display:block; margin-top:6px;">${date}</small>
                 `;
+        }
+        
+
+        
         messagesList.appendChild(card);
       }
 

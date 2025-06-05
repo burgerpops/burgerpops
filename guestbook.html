@@ -117,6 +117,7 @@
       }
 
       #back-btn,
+      #playPauseBtn,
       #logout-btn {
         position: fixed;
         left: 20px;
@@ -135,9 +136,14 @@
       }
 
       #back-btn:hover,
+      #playPauseBtn:hover,
       #logout-btn:hover {
         background-color: #d16f6f;
         color: white;
+      }
+
+      #playPauseBtn {
+        bottom: 140px;
       }
 
       #back-btn {
@@ -147,10 +153,27 @@
       #logout-btn {
         bottom: 20px;
       }
+
+      .fa-play {
+        margin-left: 3px;
+      }
+      audio {
+        display: none;
+      }
     </style>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      integrity="sha512-..."
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
   </head>
 
   <body>
+      
+      <audio id="audio" src="audio.mp3"></audio>
+
     <h1>Notes...</h1>
     <div
       class="modal fade"
@@ -184,7 +207,7 @@
     </div>
 
     <div id="floating-icons-container"></div>
-
+    
     <form id="note-form">
       <textarea
         id="message"
@@ -193,6 +216,7 @@
         required
       ></textarea>
       <button type="submit">Send!</button>
+      
     </form>
 
     <div class="messages" id="messages-list">
@@ -204,6 +228,30 @@
     <button id="logout-btn" onclick="location.href='index.html'">
       ⏻ Logout
     </button>
+    <button id="playPauseBtn" class="neumorphic-button"><i class="fas fa-play"></i></button>
+
+    <script>
+      const audio = document.getElementById("audio");
+      const playPauseBtn = document.getElementById("playPauseBtn");
+      const icon = playPauseBtn.querySelector("i");
+
+      playPauseBtn.addEventListener("click", () => {
+        if (audio.paused) {
+          audio.play();
+          icon.classList.remove("fa-play");
+          icon.classList.add("fa-pause");
+        } else {
+          audio.pause();
+          icon.classList.remove("fa-pause");
+          icon.classList.add("fa-play");
+        }
+      });
+
+      audio.addEventListener("ended", () => {
+        icon.classList.remove("fa-pause");
+        icon.classList.add("fa-play");
+      });
+    </script>
 
     <script>
       const icons = {

@@ -21,7 +21,7 @@ removeButton.type = "button";
 removeButton.className = "gallery-delete";
 removeButton.textContent = "Delete photo";
 removeButton.setAttribute("aria-label", "Delete the photo currently in view");
-document.querySelector(".controls").append(removeButton);
+document.querySelector(".controls").after(removeButton);
 let memories = [];
 let active = 0;
 let startX = 0;

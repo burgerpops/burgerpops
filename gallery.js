@@ -2,6 +2,8 @@ import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebase
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { getFirestore, collection, addDoc, serverTimestamp, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 const config={apiKey:"AIzaSyD_l5r2S8Z_9CC64cviB72MYhh2BX1Q97Y",authDomain:"burgerpops-121224.firebaseapp.com",projectId:"burgerpops-121224",storageBucket:"burgerpops-121224.appspot.com",messagingSenderId:"1204666668",appId:"1:1204666668:web:37ac2f645f411702aa6c89"};
+document.querySelector(".intro h1").innerHTML='Our <em>moments</em>, in frames.';
+const headingStyle=document.createElement("style");headingStyle.textContent='.intro{width:100%;margin-inline:auto!important;text-align:center!important}.intro h1,.intro>p:last-child{margin-left:auto!important;margin-right:auto!important;text-align:center!important}';document.head.append(headingStyle);
 const app=getApps().length?getApp():initializeApp(config),auth=getAuth(app),db=getFirestore(app),gallery=document.getElementById("gallery"),input=document.getElementById("photo-input"),status=document.getElementById("status"),counter=document.getElementById("counter");
 const photos=collection(db,"ourSpace","gallery","photos");let memories=[],active=0,startX=0;
 function position(index){const total=memories.length;let offset=index-active;if(offset>total/2)offset-=total;if(offset<-total/2)offset+=total;return offset}

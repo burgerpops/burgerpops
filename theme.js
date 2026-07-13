@@ -50,3 +50,10 @@ document.addEventListener("submit", async (event) => {
   localStorage.setItem("accessGranted", "true");
   location.href = "EgZjaHJvbWUqBwgDEA.html";
 }, true);
+
+if (location.pathname.endsWith("canvas.html")) {
+  const sharedDoodle = document.createElement("script");
+  sharedDoodle.type = "module";
+  sharedDoodle.src = "shared-doodle.js";
+  document.head.append(sharedDoodle);
+}

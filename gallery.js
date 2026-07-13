@@ -4,14 +4,11 @@ import { getFirestore, collection, addDoc, serverTimestamp, query, orderBy, onSn
 
 const collageStyle = document.createElement("style");
 collageStyle.textContent = `
-  .wall{grid-template-columns:repeat(12,1fr)!important;grid-auto-rows:58px!important;grid-auto-flow:dense!important;gap:14px!important}
-  .photo,.photo.hero{grid-column:span 4!important;grid-row:span 5!important;min-height:0!important;border-radius:18px!important}
-  .photo:nth-child(5n+1),.photo.hero{grid-column:span 6!important;grid-row:span 7!important}
-  .photo:nth-child(5n+2){grid-column:span 3!important;grid-row:span 4!important}
-  .photo:nth-child(5n+3){grid-column:span 3!important;grid-row:span 5!important}
-  .photo:nth-child(5n+4){grid-column:span 4!important;grid-row:span 4!important}
-  .photo:nth-child(5n){grid-column:span 5!important;grid-row:span 5!important}
-  @media(max-width:700px){.wall{grid-template-columns:repeat(2,1fr)!important;grid-auto-rows:110px!important;gap:10px!important}.photo,.photo.hero,.photo:nth-child(n){grid-column:span 1!important;grid-row:span 2!important;min-height:0!important;border-radius:15px!important}.photo:nth-child(3n+1){grid-row:span 3!important}}
+  .wall{display:block!important;column-count:4!important;column-gap:12px!important}
+  .photo,.photo.hero,.photo:nth-child(n){display:inline-block!important;width:100%!important;height:auto!important;min-height:0!important;margin:0 0 12px!important;border-radius:15px!important;break-inside:avoid!important;overflow:hidden!important}
+  .photo img{display:block!important;width:100%!important;height:auto!important;object-fit:initial!important}
+  @media(max-width:900px){.wall{column-count:3!important}}
+  @media(max-width:700px){.wall{column-count:2!important;column-gap:9px!important}.photo,.photo.hero,.photo:nth-child(n){margin-bottom:9px!important;border-radius:12px!important}}
 `;
 document.head.append(collageStyle);
 

@@ -1,0 +1,8 @@
+# Never publish deployment credentials or local secret files.
+.env
+.env.*
+.dev.vars
+.dev.vars.*
+service-account*.json
+*-firebase-adminsdk-*.json
+*.pem

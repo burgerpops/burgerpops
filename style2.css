@@ -20,3 +20,4 @@ footer { margin-top:auto; padding-top:42px; color:var(--muted); font-size:.8rem;
 /* Keep the homepage widget wall balanced on wide screens. */
 .widget-grid > .widget-link { grid-column:span 4; }
 @media (max-width:720px){.widget-grid > .widget-link{grid-column:span 1}}
+.widget-small{grid-column:span 3!important;min-height:160px}.miss-widget{text-align:left;color:var(--text);font:inherit;cursor:pointer}.miss-widget .widget-title{border:0;background:transparent;padding:0}.miss-widget:hover{transform:translateY(-4px);box-shadow:0 24px 54px rgba(101,56,68,.16)}.anniversary{margin-top:9px;color:var(--accent);font-weight:600}@media(max-width:720px){.widget-small{grid-column:span 1!important}}

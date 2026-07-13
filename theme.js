@@ -59,6 +59,13 @@ if (location.pathname.endsWith("canvas.html")) {
 }
 
 if (!location.pathname.endsWith("index.html") && !location.pathname.endsWith("/")) {
+  const homeWidgets = document.createElement("script");
+  homeWidgets.type = "module";
+  homeWidgets.src = "home-widgets.js";
+  document.head.append(homeWidgets);
+}
+
+if (!location.pathname.endsWith("index.html") && !location.pathname.endsWith("/")) {
   Promise.all([
     import("https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"),
     import("https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js")

@@ -70,3 +70,22 @@ if (!location.pathname.endsWith("index.html") && !location.pathname.endsWith("/"
     });
   }).catch(() => location.replace("index.html"));
 }
+
+document.addEventListener("click", async event => {
+  const logout = event.target.closest("#logout-btn");
+  if (!logout) return;
+  event.preventDefault();
+  event.stopImmediatePropagation();
+  try {
+    const [{ initializeApp, getApps, getApp }, { getAuth, signOut }] = await Promise.all([
+      import("https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"),
+      import("https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js")
+    ]);
+    const config = { apiKey: "AIzaSyD_l5r2S8Z_9CC64cviB72MYhh2BX1Q97Y", authDomain: "burgerpops-121224.firebaseapp.com", projectId: "burgerpops-121224", storageBucket: "burgerpops-121224.appspot.com", messagingSenderId: "1204666668", appId: "1:1204666668:web:37ac2f645f411702aa6c89" };
+    const app = getApps().length ? getApp() : initializeApp(config);
+    await signOut(getAuth(app));
+  } finally {
+    localStorage.removeItem("accessGranted");
+    location.replace("index.html");
+  }
+}, true);

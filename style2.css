@@ -16,3 +16,7 @@ footer { margin-top:auto; padding-top:42px; color:var(--muted); font-size:.8rem;
 @media (max-width:720px){.home-shell{padding-top:20px}.intro{padding-top:64px}.widget-grid{grid-template-columns:1fr 1fr;gap:12px}.widget{grid-column:span 1;min-height:174px;padding:19px;border-radius:20px}.widget-promise{grid-column:span 2;min-height:auto}.widget-link{min-height:174px}.widget-title{font-size:1.35rem}.metric{font-size:1.35rem}.widget-icon{margin-bottom:18px}footer{padding-top:28px}}
 @media (max-width:420px){.widget-grid{grid-template-columns:1fr}.widget,.widget-promise{grid-column:span 1}.intro h1{font-size:3.2rem}.intro{padding-top:48px}.widget{min-height:148px}footer span{display:none}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+
+/* Keep the homepage widget wall balanced on wide screens. */
+.widget-grid > .widget-link { grid-column:span 4; }
+@media (max-width:720px){.widget-grid > .widget-link{grid-column:span 1}}

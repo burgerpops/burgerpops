@@ -2,6 +2,19 @@ import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebase
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { getFirestore, collection, addDoc, serverTimestamp, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
+const collageStyle = document.createElement("style");
+collageStyle.textContent = `
+  .wall{grid-template-columns:repeat(12,1fr)!important;grid-auto-rows:58px!important;grid-auto-flow:dense!important;gap:14px!important}
+  .photo,.photo.hero{grid-column:span 4!important;grid-row:span 5!important;min-height:0!important;border-radius:18px!important}
+  .photo:nth-child(5n+1),.photo.hero{grid-column:span 6!important;grid-row:span 7!important}
+  .photo:nth-child(5n+2){grid-column:span 3!important;grid-row:span 4!important}
+  .photo:nth-child(5n+3){grid-column:span 3!important;grid-row:span 5!important}
+  .photo:nth-child(5n+4){grid-column:span 4!important;grid-row:span 4!important}
+  .photo:nth-child(5n){grid-column:span 5!important;grid-row:span 5!important}
+  @media(max-width:700px){.wall{grid-template-columns:repeat(2,1fr)!important;grid-auto-rows:110px!important;gap:10px!important}.photo,.photo.hero,.photo:nth-child(n){grid-column:span 1!important;grid-row:span 2!important;min-height:0!important;border-radius:15px!important}.photo:nth-child(3n+1){grid-row:span 3!important}}
+`;
+document.head.append(collageStyle);
+
 const config = { apiKey: "AIzaSyD_l5r2S8Z_9CC64cviB72MYhh2BX1Q97Y", authDomain: "burgerpops-121224.firebaseapp.com", projectId: "burgerpops-121224", storageBucket: "burgerpops-121224.appspot.com", messagingSenderId: "1204666668", appId: "1:1204666668:web:37ac2f645f411702aa6c89" };
 const app = getApps().length ? getApp() : initializeApp(config);
 const auth = getAuth(app), db = getFirestore(app);
@@ -31,7 +44,7 @@ function compress(file) {
 function render(items) {
   gallery.replaceChildren();
   if (!items.length) { gallery.innerHTML = '<div class="empty">No memories here yet. Add the first one.</div>'; return; }
-  items.forEach((item, index) => { const figure = document.createElement("figure"); figure.className = `photo${index === 0 ? " hero" : ""}`; const image = document.createElement("img"); image.src = item.image; image.alt = "A private shared memory"; figure.append(image); figure.addEventListener("click", () => { lightboxImage.src = item.image; lightbox.showModal(); }); gallery.append(figure); });
+  items.forEach(item => { const figure = document.createElement("figure"); figure.className = "photo"; const image = document.createElement("img"); image.src = item.image; image.alt = "A private shared memory"; figure.append(image); figure.addEventListener("click", () => { lightboxImage.src = item.image; lightbox.showModal(); }); gallery.append(figure); });
 }
 
 onAuthStateChanged(auth, user => {

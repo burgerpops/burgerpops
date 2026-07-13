@@ -21,3 +21,5 @@ footer { margin-top:auto; padding-top:42px; color:var(--muted); font-size:.8rem;
 .widget-grid > .widget-link { grid-column:span 4; }
 @media (max-width:720px){.widget-grid > .widget-link{grid-column:span 1}}
 .widget-small{grid-column:span 3!important;min-height:160px}.miss-widget{text-align:left;color:var(--text);font:inherit;cursor:pointer}.miss-widget .widget-title{border:0;background:transparent;padding:0}.miss-widget:hover{transform:translateY(-4px);box-shadow:0 24px 54px rgba(101,56,68,.16)}.anniversary{margin-top:9px;color:var(--accent);font-weight:600}@media(max-width:720px){.widget-small{grid-column:span 1!important}}
+
+.note{position:relative}.delete-note{position:absolute;right:10px;bottom:9px;width:25px;height:25px;border:0;border-radius:50%;background:rgba(92,73,50,.12);color:#5c4932;font-size:1.25rem;line-height:1;cursor:pointer}.delete-note:hover{background:rgba(92,73,50,.22)}.delete-note:disabled{opacity:.5;cursor:wait}

@@ -1,5 +1,5 @@
 import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, deleteDoc, query, orderBy, onSnapshot, serverTimestamp, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
 const config = { apiKey:"AIzaSyD_l5r2S8Z_9CC64cviB72MYhh2BX1Q97Y", authDomain:"burgerpops-121224.firebaseapp.com", projectId:"burgerpops-121224", storageBucket:"burgerpops-121224.appspot.com", messagingSenderId:"1204666668", appId:"1:1204666668:web:37ac2f645f411702aa6c89" };
@@ -22,7 +22,7 @@ function render(items) {
   }
   items.forEach(entry => {
     const item = entry.data();
-    const row = document.createElement("label");
+    const row = document.createElement("div");
     row.className = `item${item.done ? " done" : ""}`;
     const check = document.createElement("input");
     check.type = "checkbox";
@@ -36,7 +36,17 @@ function render(items) {
     });
     const label = document.createElement("span");
     label.textContent = item.text || "";
-    row.append(check, label);
+    const remove = document.createElement("button");
+    remove.className = "bucket-delete";
+    remove.type = "button";
+    remove.textContent = "Delete";
+    remove.addEventListener("click", async () => {
+      if (!confirm("Delete this bucket-list item?")) return;
+      remove.disabled = true;
+      try { await deleteDoc(doc(bucketCollection, entry.id)); }
+      catch { status.textContent = "That item could not be deleted. Please try again."; remove.disabled = false; }
+    });
+    row.append(check, label, remove);
     list.append(row);
   });
 }
